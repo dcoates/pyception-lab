@@ -1,10 +1,9 @@
 #from matplotlib.backends.backend_wx import Toolbar, FigureCanvasWx,\
      #FigureManager
 import wx
-import os
 import matplotlib
 matplotlib.use('WxAgg')
-from matplotlib.backends.backend_wxagg import Toolbar, FigureCanvasWxAgg as FigCanvas,\
+from matplotlib.backends.backend_wxagg import FigureCanvasWxAgg as FigCanvas,\
      FigureManager
 import numpy as np
 from psychopy import *
@@ -453,12 +452,15 @@ while not alldone:
     framec=75
     if (task_type==task2afc) and (which_expt==exptL):
         if stimulus_type==stimE:
+            let_height = 100
             abloc=100
             theframeA = visual.ShapeStim(myWin,pos=(-abloc,0),vertices=((-framec,-framec), (-framec,framec), (framec,framec), (framec,-framec) ), lineColor="white", fillColor=None )
             theframeB = visual.ShapeStim(myWin,pos=(abloc,0),vertices=((-framec,-framec), (-framec,framec), (framec,framec), (framec,-framec) ), lineColor="white", fillColor=None )
-            targetA   = visual.TextStim(myWin,pos=(-abloc,0), color=backcol, height=100, text="E")
-            targetB = visual.TextStim(myWin,pos=( abloc,0), color=backcol, height=100, text="E")
-            theLine = visual.ShapeStim( myWin, vertices=((0,sqrad*3), (0,-sqrad*3)), lineWidth=1, closeShape=False, lineColor=myred)
+            targetA   = visual.TextStim(myWin,pos=(-abloc,0), color=backcol, height=let_height, text="E")
+            targetB = visual.TextStim(myWin,pos=( abloc,0), color=backcol, height=let_height, text="E")
+
+            theLine = visual.ShapeStim( myWin, vertices=((0,let_height/3.0), (0,-let_height/3.0)), lineWidth=3, closeShape=False, lineColor=myred)
+
         elif stimulus_type==stimSmSq:
             sqrad=stimsize_pixels
             abloc=sqrad * 4
@@ -503,13 +505,13 @@ while not alldone:
         else:
             targetA.setFillColor( "#%02X%02X%02X" % (stealcoords[allwhitesteal][0], stealcoords[allwhitesteal][1], stealcoords[allwhitesteal][2]) )
             targetB.setFillColor( "#%02X%02X%02X" % (stealcoords[backsteal][0], stealcoords[backsteal][1], stealcoords[backsteal][2]) )
-            if show_line:
-                theLine.draw()
+
+        if show_line:
+            theLine.draw()
         if show_frame:
             theframeA.draw()
             theframeB.draw()
-        else:
-            theLine.draw()
+
         targetA.draw()
         targetB.draw()
     else:
@@ -519,7 +521,9 @@ while not alldone:
                 theframe.draw()
         target.draw()
 
-    if task_type==task2afc:
+    if method==methA:
+        message.setText("Use up and down arrows until just below threshold.\nThen use 't' to enter constant stimuli (and respond with YN/2AFC keys above).")
+    elif task_type==task2afc:
         message.setText("The first trial will be a test trial. Which side has the the white flashed target? Press any key to start.")
     else:
         message.setText("The first trial will be a test trial. Do you see the white flashed target? Press any key to start.")
@@ -775,4 +779,3 @@ while not alldone:
     # main loop: while !alldone
 
 myWin.close()
-
