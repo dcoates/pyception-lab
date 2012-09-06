@@ -321,8 +321,8 @@ def drawstim():
         else:
             targetA.setFillColor( "#%02X%02X%02X" % (rgbA[0],rgbA[1], rgbA[2]) )
             targetB.setFillColor( "#%02X%02X%02X" % (rgbB[0],rgbB[1], rgbB[2]) )
-            if show_line:
-                theLine.draw()
+        if show_line:
+            theLine.draw()
 
         targetA.draw()
         targetB.draw()
@@ -450,6 +450,10 @@ while not alldone:
         theFix2 = visual.ShapeStim( myWin, vertices=((0-fixwidth,fixlocY), (0+fixwidth,fixlocY)), lineWidth=1, closeShape=False, lineColor="black")
 
     framec=75
+
+    # To avoid errors, create something off-screen
+    theLine = visual.ShapeStim( myWin, vertices=((1200,1200),(1200,1210)), lineWidth=1, closeShape=False, lineColor=myred)
+
     if (task_type==task2afc) and (which_expt==exptL):
         if stimulus_type==stimE:
             let_height = 100
@@ -466,7 +470,7 @@ while not alldone:
             abloc=sqrad * 4
             #theframeA = visual.ShapeStim(myWin,pos=(abloc*3.0,0),vertices=((-framec,-framec), (-framec,framec), (framec,framec), (framec,-framec) ), lineColor=backcol, fillColor=None )
             #theframeB = visual.ShapeStim(myWin,pos=(abloc*3.0,0),vertices=((-framec,-framec), (-framec,framec), (framec,framec), (framec,-framec) ), lineColor=backcol, fillColor=None )
-            theLine = visual.ShapeStim( myWin, vertices=((0,sqrad*3), (0,-sqrad*3)), lineWidth=1, closeShape=False, lineColor=myred)
+            theLine = visual.ShapeStim( myWin, vertices=((0,sqrad*3), (0,-sqrad*3)), lineWidth=2, closeShape=False, lineColor=myred)
 
             targetA = visual.ShapeStim(myWin,pos=(-abloc,0), vertices=((-sqrad,-sqrad), (-sqrad,sqrad), (sqrad,sqrad), (sqrad,-sqrad) ), lineColor=backcol ) 
             targetB = visual.ShapeStim(myWin,pos=( abloc,0), vertices=((-sqrad,-sqrad), (-sqrad,sqrad), (sqrad,sqrad), (sqrad,-sqrad) ), lineColor=backcol ) 
@@ -477,6 +481,7 @@ while not alldone:
             theLine = visual.ShapeStim( myWin, vertices=((0,sqrad*1.5), (0,-sqrad*1.5)), lineWidth=1, closeShape=False, lineColor=myred)
 
             targetA = visual.ShapeStim(myWin,pos=(-abloc,0), vertices=((-sqrad,-sqrad), (-sqrad,sqrad), (sqrad,sqrad), (sqrad,-sqrad) ), lineColor=backcol ) 
+            targetB = visual.ShapeStim(myWin,pos=( abloc,0), vertices=((-sqrad,-sqrad), (-sqrad,sqrad), (sqrad,sqrad), (sqrad,-sqrad) ), lineColor=backcol ) 
 
     else: # taskYN | temp1 
         if stimulus_type==stimE:
@@ -515,10 +520,12 @@ while not alldone:
         targetA.draw()
         targetB.draw()
     else:
-        target.setColor( "#%02X%02X%02X" % (stealcoords[allwhitesteal][0], stealcoords[allwhitesteal][1], stealcoords[allwhitesteal][2]) )
         if stimulus_type == stimE:
-            if show_frame:
-                theframe.draw()
+            target.setColor( "#%02X%02X%02X" % (stealcoords[allwhitesteal][0], stealcoords[allwhitesteal][1], stealcoords[allwhitesteal][2]) )
+        else:
+            target.setFillColor( "#%02X%02X%02X" % (stealcoords[allwhitesteal][0], stealcoords[allwhitesteal][1], stealcoords[allwhitesteal][2]) )
+        if show_frame:
+            theframe.draw()
         target.draw()
 
     if method==methA:
