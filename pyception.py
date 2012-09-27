@@ -488,7 +488,8 @@ while not alldone:
             theframe = visual.ShapeStim(myWin,vertices=((-framec,-framec), (-framec,framec), (framec,framec), (framec,-framec) ), lineColor="white", fillColor=None )
             target = visual.TextStim(myWin,pos=(0,0), color=backcol, height=100, text="E")
         elif stimulus_type==stimSmSq:
-            sqrad = 10
+            sqrad=stimsize_pixels
+            abloc=sqrad * 4
             target = visual.ShapeStim(myWin,pos=(0,0), vertices=((-sqrad,-sqrad), (-sqrad,sqrad), (sqrad,sqrad), (sqrad,-sqrad) ), lineColor=backcol ) 
         elif stimulus_type==stimLgSq:
             sqrad = 250
